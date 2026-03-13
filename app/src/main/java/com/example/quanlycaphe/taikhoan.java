@@ -23,19 +23,11 @@ public class taikhoan extends AppCompatActivity {
         imgbtn_nv = findViewById(R.id.imgbtn_nv);
         imgbtn_thoattk = findViewById(R.id.imgbtn_thoattk);
 
-        imgbtn_nv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent dk = new Intent(taikhoan  .this, dk.class);
-                startActivities(new Intent[]{dk});
-            }
+        imgbtn_nv.setOnClickListener(view -> {
+            Intent dk = new Intent(taikhoan  .this, dk.class);
+            startActivities(new Intent[]{dk});
         });
-        imgbtn_thoattk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        imgbtn_thoattk.setOnClickListener(view -> finish());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

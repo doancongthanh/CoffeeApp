@@ -57,12 +57,7 @@ public class ban6 extends AppCompatActivity {
         btn_tt6 = findViewById(R.id.btn_tt6);
         imgbtn_back6 = findViewById(R.id.imgbtn_back6);
 
-        imgbtn_back6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        imgbtn_back6.setOnClickListener(view -> finish());
 
         menuDataList = loadDataFromSharedPreferences();
 
@@ -122,108 +117,99 @@ public class ban6 extends AppCompatActivity {
             }
         });
 
-        lv66.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                long clickTime = System.currentTimeMillis(); // Lấy thời gian hiện tại
+        lv66.setOnItemClickListener((adapterView, view, position, id) -> {
+            long clickTime = System.currentTimeMillis(); // Lấy thời gian hiện tại
 
-                if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) { // Kiểm tra bấm đúp
-                    // Lấy món cần xóa
-                    String selectedItem = selectedItemsList.get(position);
+            if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) { // Kiểm tra bấm đúp
+                // Lấy món cần xóa
+                String selectedItem = selectedItemsList.get(position);
 
-                    // Tách số lượng và tên món (giả sử định dạng là "Số lượng x Tên món")
-                    String[] parts = selectedItem.split(" x ");
-                    if (parts.length == 2) {
-                        try {
-                            int count = Integer.parseInt(parts[0]); // Lấy số lượng
-                            String itemName = parts[1]; // Lấy tên món
+                // Tách số lượng và tên món (giả sử định dạng là "Số lượng x Tên món")
+                String[] parts = selectedItem.split(" x ");
+                if (parts.length == 2) {
+                    try {
+                        int count = Integer.parseInt(parts[0]); // Lấy số lượng
+                        String itemName = parts[1]; // Lấy tên món
 
-                            // Giảm số lượng trong HashMap
-                            int currentCount = itemCounts.getOrDefault(itemName, 0);
-                            if (currentCount > 1) {
-                                itemCounts.put(itemName, currentCount - 1);
-                                selectedItemsList.set(position, (currentCount - 1) + " x " + itemName);
-                            } else {
-                                // Nếu chỉ còn 1, xóa món khỏi danh sách
-                                itemCounts.remove(itemName);
-                                selectedItemsList.remove(position);
-                            }
-
-                            // Tính lại giá tiền
-                            String[] priceParts = itemName.split(" - ");
-                            if (priceParts.length == 2) {
-                                int price = Integer.parseInt(priceParts[1].replace(" VND", "").trim());
-                                totalPrice -= price; // Giảm giá từ tổng tiền
-                                txt_tongtien6.setText(formatCurrencyVND(totalPrice));
-                            }
-
-                            adapter2.notifyDataSetChanged(); // Cập nhật giao diện lv66
-                        } catch (NumberFormatException e) {
-                            Toast.makeText(ban6.this, "Lỗi định dạng số lượng hoặc giá tiền", Toast.LENGTH_SHORT).show();
+                        // Giảm số lượng trong HashMap
+                        int currentCount = itemCounts.getOrDefault(itemName, 0);
+                        if (currentCount > 1) {
+                            itemCounts.put(itemName, currentCount - 1);
+                            selectedItemsList.set(position, (currentCount - 1) + " x " + itemName);
+                        } else {
+                            // Nếu chỉ còn 1, xóa món khỏi danh sách
+                            itemCounts.remove(itemName);
+                            selectedItemsList.remove(position);
                         }
-                    }
 
-                    lastClickTime = 0; // Đặt lại lastClickTime sau khi xử lý bấm đúp
-                } else {
-                    lastClickTime = clickTime; // Lưu thời gian của lần bấm đầu tiên
+                        // Tính lại giá tiền
+                        String[] priceParts = itemName.split(" - ");
+                        if (priceParts.length == 2) {
+                            int price = Integer.parseInt(priceParts[1].replace(" VND", "").trim());
+                            totalPrice -= price; // Giảm giá từ tổng tiền
+                            txt_tongtien6.setText(formatCurrencyVND(totalPrice));
+                        }
+
+                        adapter2.notifyDataSetChanged(); // Cập nhật giao diện lv66
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(ban6.this, "Lỗi định dạng số lượng hoặc giá tiền", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+                lastClickTime = 0; // Đặt lại lastClickTime sau khi xử lý bấm đúp
+            } else {
+                lastClickTime = clickTime; // Lưu thời gian của lần bấm đầu tiên
             }
         });
 
-        btn_tt6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!selectedItemsList.isEmpty()) {
-                    // Lấy ngày hiện tại dưới dạng chuỗi "yyyyMMdd"
-                    String currentDate = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date());
-                    Log.d("ban6", "Current Date: " + currentDate); // Kiểm tra ngày hiện tại
+        btn_tt6.setOnClickListener(view -> {
+            if (!selectedItemsList.isEmpty()) {
+                // Lấy ngày hiện tại dưới dạng chuỗi "yyyyMMdd"
+                String currentDate = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date());
+                Log.d("ban6", "Current Date: " + currentDate); // Kiểm tra ngày hiện tại
 
-                    // Tạo key cho doanh thu của ngày hiện tại
-                    String revenueKey = "doanhThu_" + currentDate;
-                    String invoiceKey = "soHoaDon_" + currentDate; // Key để lưu số lượng hóa đơn
+                // Tạo key cho doanh thu của ngày hiện tại
+                String revenueKey = "doanhThu_" + currentDate;
+                String invoiceKey = "soHoaDon_" + currentDate; // Key để lưu số lượng hóa đơn
 
-                    // Lưu các món đã thanh toán vào SharedPreferences
-                    SharedPreferences sharedPreferences = getSharedPreferences("Data", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                // Lưu các món đã thanh toán vào SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("Data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    // Cập nhật danh sách các món đã thanh toán trong ngày
-                    Set<String> paidItemsSet = sharedPreferences.getStringSet("paidItems_" + currentDate, new HashSet<>());
-                    paidItemsSet.addAll(selectedItemsList); // Thêm các món đã thanh toán vào danh sách
-                    editor.putStringSet("paidItems_" + currentDate, paidItemsSet);
+                // Cập nhật danh sách các món đã thanh toán trong ngày
+                Set<String> paidItemsSet = sharedPreferences.getStringSet("paidItems_" + currentDate, new HashSet<>());
+                paidItemsSet.addAll(selectedItemsList); // Thêm các món đã thanh toán vào danh sách
+                editor.putStringSet("paidItems_" + currentDate, paidItemsSet);
 
-                    // Lưu số lượng hóa đơn
-                    int invoiceCount = sharedPreferences.getInt(invoiceKey, 0) + 1;
-                    editor.putInt(invoiceKey, invoiceCount);
-                    editor.putString(revenueKey, formatCurrencyVND(totalPrice)); // Lưu tổng doanh thu cho ngày hiện tại
-                    editor.apply();
+                // Lưu số lượng hóa đơn
+                int invoiceCount = sharedPreferences.getInt(invoiceKey, 0) + 1;
+                editor.putInt(invoiceKey, invoiceCount);
+                editor.putString(revenueKey, formatCurrencyVND(totalPrice)); // Lưu tổng doanh thu cho ngày hiện tại
+                editor.apply();
 
-                    // Chuyển sang Activity hóa đơn và truyền dữ liệu
-                    // Hiển thị thông báo thành công với AlertDialog
-                    new AlertDialog.Builder(ban6.this)
-                            .setTitle("Thành Công")
-                            .setMessage("Bạn đã thanh toán thành công!")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("ban5", "Tổng tiền trước khi truyền: " + totalPrice);
+                // Chuyển sang Activity hóa đơn và truyền dữ liệu
+                // Hiển thị thông báo thành công với AlertDialog
+                new AlertDialog.Builder(ban6.this)
+                        .setTitle("Thành Công")
+                        .setMessage("Bạn đã thanh toán thành công!")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            Log.d("ban5", "Tổng tiền trước khi truyền: " + totalPrice);
 
-                                    Intent intent = new Intent(ban6.this, hoadon.class);
-                                    intent.putExtra("table_number", "5");  // Truyền số bàn
-                                    intent.putExtra("items", new ArrayList<>(selectedItemsList));  // Truyền danh sách món ăn
-                                    intent.putExtra("totalPrice", totalPrice);  // Truyền tổng tiền
+                            Intent intent = new Intent(ban6.this, hoadon.class);
+                            intent.putExtra("table_number", "5");  // Truyền số bàn
+                            intent.putExtra("items", new ArrayList<>(selectedItemsList));  // Truyền danh sách món ăn
+                            intent.putExtra("totalPrice", totalPrice);  // Truyền tổng tiền
 
-                                    // Truyền thêm thông tin khác nếu cần
-                                    String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-                                    intent.putExtra("date_time", currentDateTime);
+                            // Truyền thêm thông tin khác nếu cần
+                            String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                            intent.putExtra("date_time", currentDateTime);
 
-                                    startActivity(intent);
-                                }
-                            })
-                            .show();
+                            startActivity(intent);
+                        })
+                        .show();
 
-                } else {
-                    Toast.makeText(ban6.this, "Chưa có món nào để thanh toán!", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(ban6.this, "Chưa có món nào để thanh toán!", Toast.LENGTH_SHORT).show();
             }
         });
     }

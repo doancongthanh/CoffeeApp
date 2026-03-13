@@ -30,35 +30,21 @@ public class quanly extends AppCompatActivity {
         imgbtn_backk = findViewById(R.id.imgbtn_backk);
         imgbtn_taikhoan = findViewById(R.id.imgbtn_taikhoan);
 
-        imgbtn_backk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        imgbtn_backk.setOnClickListener(view -> finish());
+
+        imgbtn_menu.setOnClickListener(view -> {
+            Intent menu = new Intent(quanly.this, menuu.class);
+            startActivity(menu);
         });
 
-        imgbtn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent menu = new Intent(quanly.this, menuu.class);
-                startActivity(menu);
-            }
+        imgbtn_tk.setOnClickListener(view -> {
+            Intent tk = new Intent(quanly.this, thongke.class);
+            startActivity(tk);
         });
 
-        imgbtn_tk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent tk = new Intent(quanly.this, thongke.class);
-                startActivity(tk);
-            }
-        });
-
-        imgbtn_taikhoan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent tkk = new Intent(quanly.this, taikhoan.class);
-                startActivity(tkk);
-            }
+        imgbtn_taikhoan.setOnClickListener(view -> {
+            Intent tkk = new Intent(quanly.this, taikhoan.class);
+            startActivity(tkk);
         });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

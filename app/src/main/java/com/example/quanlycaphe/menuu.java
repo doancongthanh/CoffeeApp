@@ -66,44 +66,36 @@ public class menuu extends AppCompatActivity {
         }
         loadData();
 
-        imgbtn_backmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
+        imgbtn_backmenu.setOnClickListener(view -> finish());
+
+        btn_them.setOnClickListener(view -> {
+            String tennuoc = edit_tennuoc.getText().toString();
+            String giaString = edit_gia.getText().toString();
+            int gia;
+            try {
+                gia = Integer.parseInt(giaString); // Chuyển đổi giá thành số nguyên
+            } catch (NumberFormatException e) {
+                Toast.makeText(menuu.this, "Giá không hợp lệ!", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
 
-        btn_them.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String tennuoc = edit_tennuoc.getText().toString();
-                String giaString = edit_gia.getText().toString();
-                int gia;
-                try {
-                    gia = Integer.parseInt(giaString); // Chuyển đổi giá thành số nguyên
-                } catch (NumberFormatException e) {
-                    Toast.makeText(menuu.this, "Giá không hợp lệ!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            String giaFormatted = gia * 1000 + " VND"; // Nhân với 1000 và thêm " VND"
+            ContentValues myvalue = new ContentValues();
+            myvalue.put("tennuoc", tennuoc);
+            myvalue.put("gia", giaFormatted); // Lưu giá đã định dạng vào cơ sở dữ liệu
 
-                String giaFormatted = gia * 1000 + " VND"; // Nhân với 1000 và thêm " VND"
-                ContentValues myvalue = new ContentValues();
-                myvalue.put("tennuoc", tennuoc);
-                myvalue.put("gia", giaFormatted); // Lưu giá đã định dạng vào cơ sở dữ liệu
-
-                String msg;
-                if (mydatabase.insert("tblmenu", null, myvalue) == -1) {
-                    msg = "Fail to Insert Record!";
-                } else {
-                    msg = "Insert record Successfully";
-                    mylist.add(tennuoc + " - " + giaFormatted); // Thêm dữ liệu đã định dạng vào ArrayList
-                    myadapter.notifyDataSetChanged(); // Cập nhật ListView
-                    edit_tennuoc.setText("");
-                    edit_gia.setText("");
-                    saveDataToSharedPreferences(mylist);
-                }
-                Toast.makeText(menuu.this, msg, Toast.LENGTH_SHORT).show();
+            String msg;
+            if (mydatabase.insert("tblmenu", null, myvalue) == -1) {
+                msg = "Fail to Insert Record!";
+            } else {
+                msg = "Insert record Successfully";
+                mylist.add(tennuoc + " - " + giaFormatted); // Thêm dữ liệu đã định dạng vào ArrayList
+                myadapter.notifyDataSetChanged(); // Cập nhật ListView
+                edit_tennuoc.setText("");
+                edit_gia.setText("");
+                saveDataToSharedPreferences(mylist);
             }
+            Toast.makeText(menuu.this, msg, Toast.LENGTH_SHORT).show();
         });
 
         lv_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -39,30 +39,17 @@ public class dk extends AppCompatActivity {
         btn_dk = findViewById(R.id.btn_dk);
         imgbtn_thoatdk = findViewById(R.id.imgbtn_thoatdk);
 
-        imgbtn_thoatdk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        imgbtn_thoatdk.setOnClickListener(view -> finish());
 
-        edit_passw.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    handleSignup();
-                    return true; // Đã xử lý sự kiện
-                }
-                return false;
-            }
-        });
-
-        btn_dk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        edit_passw.setOnKeyListener((view, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 handleSignup();
+                return true; // Đã xử lý sự kiện
             }
+            return false;
         });
+
+        btn_dk.setOnClickListener(view -> handleSignup());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -101,14 +88,11 @@ public class dk extends AppCompatActivity {
             Intent intent = new Intent(dk.this, MainActivity.class);
             AlertDialog.Builder Dialog = new AlertDialog.Builder(dk.this);
             Dialog.setTitle("ĐANG KÝ THÀNH CÔNG");
-            Dialog.setNegativeButton("YES", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            Dialog.setNegativeButton("YES", (dialogInterface, i) -> {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 // Bắt đầu MainActivity
                 startActivity(intent);
-            }
-        });
+            });
             Dialog.create();
             Dialog.show();
         } catch (Exception e){

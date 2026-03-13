@@ -27,53 +27,31 @@ public class homee extends AppCompatActivity {
         imgbtn_qly = findViewById(R.id.imgbtn_qly);
         imgbtn_dx = findViewById(R.id.imgbtn_dxnv);
 
-        imgbtn_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(homee.this, order.class);
-                startActivities(new Intent[]{myIntent});
-            }
+        imgbtn_order.setOnClickListener(view -> {
+            Intent myIntent = new Intent(homee.this, order.class);
+            startActivities(new Intent[]{myIntent});
         });
 
-        imgbtn_qly.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent b = new Intent(homee.this, quanly.class);
-                startActivities(new Intent[]{b});
-            }
+        imgbtn_qly.setOnClickListener(view -> {
+            Intent b = new Intent(homee.this, quanly.class);
+            startActivities(new Intent[]{b});
         });
 
-        imgbtn_dx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(homee.this, MainActivity.class);
-                AlertDialog.Builder Dialog = new AlertDialog.Builder(homee.this);
-                Dialog.setTitle("Thông Báo");
-                Dialog.setMessage("Bạn có muốn đăng xuất không?");
-                Dialog.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        // Bắt đầu MainActivity
-                        startActivity(intent);
+        imgbtn_dx.setOnClickListener(view -> {
+            Intent intent = new Intent(homee.this, MainActivity.class);
+            AlertDialog.Builder Dialog = new AlertDialog.Builder(homee.this);
+            Dialog.setTitle("Thông Báo");
+            Dialog.setMessage("Bạn có muốn đăng xuất không?");
+            Dialog.setNegativeButton("CÓ", (dialogInterface, i) -> {
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                // Bắt đầu MainActivity
+                startActivity(intent);
 
-                    }
-                });
-                Dialog.setPositiveButton("KHÔNG", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(homee.this, "Bạn đã chọn KHÔNG", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Dialog.setNeutralButton("Thoát", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(homee.this, "Bạn đã chọn Thoát", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Dialog.create();
-                Dialog.show();
-            }
+            });
+            Dialog.setPositiveButton("KHÔNG", (dialogInterface, i) -> Toast.makeText(homee.this, "Bạn đã chọn KHÔNG", Toast.LENGTH_SHORT).show());
+            Dialog.setNeutralButton("Thoát", (dialogInterface, i) -> Toast.makeText(homee.this, "Bạn đã chọn Thoát", Toast.LENGTH_SHORT).show());
+            Dialog.create();
+            Dialog.show();
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

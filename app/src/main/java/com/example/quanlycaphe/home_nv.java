@@ -27,45 +27,26 @@ public class home_nv extends AppCompatActivity {
         imgbtn_ordernv = findViewById(R.id.imgbtn_ordernv);
         imgbtn_dxnv = findViewById(R.id.imgbtn_dxnv);
 
-        imgbtn_dxnv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent_nv = new Intent(home_nv.this, MainActivity.class);
-                AlertDialog.Builder Dialog = new AlertDialog.Builder(home_nv.this);
-                Dialog.setTitle("Thông Báo");
-                Dialog.setMessage("Bạn có muốn đăng xuất không?");
-                Dialog.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        intent_nv.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        // Bắt đầu MainActivity
-                        startActivity(intent_nv);
+        imgbtn_dxnv.setOnClickListener(view -> {
+            Intent intent_nv = new Intent(home_nv.this, MainActivity.class);
+            AlertDialog.Builder Dialog = new AlertDialog.Builder(home_nv.this);
+            Dialog.setTitle("Thông Báo");
+            Dialog.setMessage("Bạn có muốn đăng xuất không?");
+            Dialog.setNegativeButton("CÓ", (dialogInterface, i) -> {
+                intent_nv.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                // Bắt đầu MainActivity
+                startActivity(intent_nv);
 
-                    }
-                });
-                Dialog.setPositiveButton("KHÔNG", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(home_nv.this, "Bạn đã chọn KHÔNG", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Dialog.setNeutralButton("Thoát", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(home_nv.this, "Bạn đã chọn Thoát", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Dialog.create();
-                Dialog.show();
-            }
+            });
+            Dialog.setPositiveButton("KHÔNG", (dialogInterface, i) -> Toast.makeText(home_nv.this, "Bạn đã chọn KHÔNG", Toast.LENGTH_SHORT).show());
+            Dialog.setNeutralButton("Thoát", (dialogInterface, i) -> Toast.makeText(home_nv.this, "Bạn đã chọn Thoát", Toast.LENGTH_SHORT).show());
+            Dialog.create();
+            Dialog.show();
         });
 
-        imgbtn_ordernv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent od = new Intent(home_nv.this, order.class);
-                startActivities(new Intent[]{od});
-            }
+        imgbtn_ordernv.setOnClickListener(view -> {
+            Intent od = new Intent(home_nv.this, order.class);
+            startActivities(new Intent[]{od});
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

@@ -29,59 +29,36 @@ public class order extends AppCompatActivity {
         imgbtn_6 = findViewById(R.id.imgbtn_6);
         imgbtn_back = findViewById(R.id.imgbtn_dxnv);
 
-        imgbtn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        imgbtn_back.setOnClickListener(view -> finish());
+
+        imgbtn_1.setOnClickListener(view -> {
+            Intent ban1 = new Intent(order.this, com.example.quanlycaphe.ban.ban1.class);
+            startActivities(new Intent[]{ban1});
         });
 
-        imgbtn_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ban1 = new Intent(order.this, com.example.quanlycaphe.ban.ban1.class);
-                startActivities(new Intent[]{ban1});
-            }
+        imgbtn_2.setOnClickListener(view -> {
+            Intent ban2 = new Intent(order.this, com.example.quanlycaphe.ban.ban2.class);
+            startActivities(new Intent[]{ban2});
         });
 
-        imgbtn_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ban2 = new Intent(order.this, com.example.quanlycaphe.ban.ban2.class);
-                startActivities(new Intent[]{ban2});
-            }
+        imgbtn_6.setOnClickListener(view -> {
+            Intent ban6 = new Intent(order.this, com.example.quanlycaphe.ban.ban6.class);
+            startActivities(new Intent[]{ban6});
         });
 
-        imgbtn_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ban6 = new Intent(order.this, com.example.quanlycaphe.ban.ban6.class);
-                startActivities(new Intent[]{ban6});
-            }
+        imgbtn_3.setOnClickListener(view -> {
+            Intent ban3 = new Intent(order.this, com.example.quanlycaphe.ban.ban3.class);
+            startActivities(new Intent[]{ban3});
         });
 
-        imgbtn_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ban3 = new Intent(order.this, com.example.quanlycaphe.ban.ban3.class);
-                startActivities(new Intent[]{ban3});
-            }
+        imgbtn_4.setOnClickListener(view -> {
+            Intent ban4 = new Intent(order.this, com.example.quanlycaphe.ban.ban4.class);
+            startActivities(new Intent[]{ban4});
         });
 
-        imgbtn_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ban4 = new Intent(order.this, com.example.quanlycaphe.ban.ban4.class);
-                startActivities(new Intent[]{ban4});
-            }
-        });
-
-        imgbtn_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ban5 = new Intent(order.this, com.example.quanlycaphe.ban.ban5.class);
-                startActivities(new Intent[]{ban5});
-            }
+        imgbtn_5.setOnClickListener(view -> {
+            Intent ban5 = new Intent(order.this, com.example.quanlycaphe.ban.ban5.class);
+            startActivities(new Intent[]{ban5});
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

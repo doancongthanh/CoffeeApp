@@ -44,12 +44,7 @@ public class thongke extends AppCompatActivity {
         txt_hd = findViewById(R.id.txt_hd);
         imgbtn_backtk = findViewById(R.id.imgbtn_backtk);
 
-        imgbtn_backtk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        imgbtn_backtk.setOnClickListener(view -> finish());
         loadPrintedInvoicesStatistics();
     }
     private void loadPrintedInvoicesStatistics() {

@@ -34,24 +34,16 @@ public class MainActivity extends AppCompatActivity {
         edit_pass = findViewById(R.id.edit_pass);
         btn_dn = findViewById(R.id.btn_dk);
 
-        btn_dn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleLogin();
-            }
-        });
+        btn_dn.setOnClickListener(view -> handleLogin());
 
-        edit_pass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    // Gọi phương thức handleLogin khi nhấn Enter
-                    handleLogin();
-                    return true; // Tuyên bố rằng sự kiện đã được xử lý
-                }
-                return false; // Không xử lý sự kiện
+        edit_pass.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                    (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                // Gọi phương thức handleLogin khi nhấn Enter
+                handleLogin();
+                return true; // Tuyên bố rằng sự kiện đã được xử lý
             }
+            return false; // Không xử lý sự kiện
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
